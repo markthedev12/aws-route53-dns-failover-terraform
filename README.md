@@ -1,52 +1,25 @@
----
+# AWS Route 53 Active-Passive DNS Failover Architecture with Terraform
 
-## 🚀 Execution & Verification
-
-### 1. Configuration & Project Structure
-Defined declarative Terraform infrastructure modules across `main.tf`, `variables.tf`, and `outputs.tf`:
-
-<div align="center">
-  
-<img width="289" height="80" alt="Screenshot 2026-08-27 190025" src="https://github.com/user-attachments/assets/4698b07f-c587-47a4-b3c3-d2fc3b8d909f" />
-
-  
-</div>
+An Infrastructure-as-Code deployment modeling high-availability DNS routing and automated disaster recovery failover using **Amazon Route 53** and **HashiCorp Terraform**.
 
 ---
 
-### 2. Syntax & Argument Validation
-Validated provider schemas, required arguments, and variable interpolation:
+## 📌 Architecture Overview
 
-<div align="center">
-  
-<img width="449" height="51" alt="Screenshot 2026-08-27 185944" src="https://github.com/user-attachments/assets/786ed193-42a2-4c16-8e5a-92b9b6f9b35c" />
+This project provisions an automated active-passive DNS failover architecture designed to maintain application availability during endpoint degradation:
 
-  
-</div>
+1. **Public Hosted Zone:** Establishes DNS management for the target domain (`schwinngroup.com`).
+2. **Endpoint Health Check:** External HTTP health probe continuously monitoring primary endpoint status.
+3. **Primary Routing Record:** Routes production traffic to the primary infrastructure under normal operating conditions.
+4. **Secondary Failover Record:** Automatically routes traffic to a disaster recovery endpoint when the primary health check breaches failure thresholds.
 
 ---
 
-### 3. Terraform Plan Output
-Confirmed the dry-run execution plan to provision the 4 core DNS and health check resources:
+## 📂 Project Structure
 
-<img width="372" height="31" alt="Screenshot 2026-08-27 190012" src="https://github.com/user-attachments/assets/5fe23a98-02ce-4ec1-b56d-fcfd33bd6da2" />
-
-  
-
-## 🛠️ Deployment Steps
-
-```powershell
-# Initialize Terraform and download AWS provider plugins
-terraform init
-
-# Validate configuration syntax
-terraform validate
-
-# Review execution plan
-terraform plan
-
-# Apply infrastructure (optional for live deployment)
-terraform apply -auto-approve
-
-# Clean up resources
-terraform destroy -auto-approve
+```text
+aws-route53-dns-failover-terraform/
+├── main.tf        # Route 53 zone, health check, and failover record definitions
+├── variables.tf   # Parameterized region and domain variables
+├── outputs.tf     # Exported Name Servers and Health Check IDs
+└── screenshots/   # Verification proof

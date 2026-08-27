@@ -1,34 +1,52 @@
-# AWS Route 53 Active-Passive DNS Failover Architecture with Terraform
+---
 
-An Infrastructure-as-Code (IaC) deployment modeling high-availability DNS routing and automated disaster recovery failover using **Amazon Route 53** and **HashiCorp Terraform**.
+## 🚀 Execution & Verification
+
+### 1. Configuration & Project Structure
+Defined declarative Terraform infrastructure modules across `main.tf`, `variables.tf`, and `outputs.tf`:
+
+<div align="center">
+  
+<img width="289" height="80" alt="Screenshot 2026-08-27 190025" src="https://github.com/user-attachments/assets/4698b07f-c587-47a4-b3c3-d2fc3b8d909f" />
+
+  
+</div>
 
 ---
 
-## 📌 Architecture Overview
+### 2. Syntax & Argument Validation
+Validated provider schemas, required arguments, and variable interpolation:
 
-This project provisions an automated active-passive DNS failover architecture designed to maintain application availability during endpoint degradation:
+<div align="center">
+  
+<img width="449" height="51" alt="Screenshot 2026-08-27 185944" src="https://github.com/user-attachments/assets/786ed193-42a2-4c16-8e5a-92b9b6f9b35c" />
 
-1. **Public Hosted Zone:** Establishes DNS management for the target domain (`schwinngroup.com`).
-2. **Endpoint Health Check:** Configures an external HTTP health probe to continuously monitor primary endpoint status.
-3. **Primary Routing Record:** Routes production traffic to the primary infrastructure under normal operating conditions.
-4. **Secondary Failover Record:** Automatically intercepts and routes traffic to a disaster recovery endpoint when the primary health check breaches failure thresholds.
+  
+</div>
 
-Project Screenshots:
-<img width="449" height="51" alt="Screenshot 2026-08-27 185944" src="https://github.com/user-attachments/assets/b24fd653-4099-46fd-b577-c358638ee805" />
+---
 
+### 3. Terraform Plan Output
+Confirmed the dry-run execution plan to provision the 4 core DNS and health check resources:
 
+<img width="372" height="31" alt="Screenshot 2026-08-27 190012" src="https://github.com/user-attachments/assets/5fe23a98-02ce-4ec1-b56d-fcfd33bd6da2" />
 
+  
 
+## 🛠️ Deployment Steps
 
+```powershell
+# Initialize Terraform and download AWS provider plugins
+terraform init
 
+# Validate configuration syntax
+terraform validate
 
-<img width="372" height="31" alt="Screenshot 2026-08-27 190012" src="https://github.com/user-attachments/assets/9a355cea-f9c5-4025-b29a-d2d4f3deedd3" />
+# Review execution plan
+terraform plan
 
+# Apply infrastructure (optional for live deployment)
+terraform apply -auto-approve
 
-
-
-
-
-
-
-<img width="289" height="80" alt="Screenshot 2026-08-27 190025" src="https://github.com/user-attachments/assets/3845aba3-f16c-4cd6-af2a-e25ee81d66dd" />
+# Clean up resources
+terraform destroy -auto-approve

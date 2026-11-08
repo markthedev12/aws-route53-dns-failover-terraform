@@ -19,7 +19,7 @@ resource "aws_route53_zone" "primary" {
 
 # 2. Public Endpoint Health Check
 resource "aws_route53_health_check" "primary_check" {
-  fqdn              = "app.${var.domain_name}"
+  ip_address        = var.primary_ipv4
   port              = 80
   type              = "HTTP"
   resource_path     = "/health"
@@ -44,7 +44,7 @@ resource "aws_route53_record" "primary_app" {
   }
 
   health_check_id = aws_route53_health_check.primary_check.id
-  records         = ["198.51.100.10"]
+  records         = [var.primary_ipv4]
 }
 
 # 4. Failover Secondary / Disaster Recovery Record
@@ -59,5 +59,5 @@ resource "aws_route53_record" "secondary_app" {
     type = "SECONDARY"
   }
 
-  records = ["198.51.100.99"]
+  records = [var.secondary_ipv4]
 }
